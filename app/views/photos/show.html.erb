@@ -2,6 +2,19 @@
 
 <%= render @photo %>
 
+<h3>Comentários</h3>
+<% @photo.comments.each do |comment| %>
+  <p><strong><%= comment.user.email %>:</strong> <%= comment.body %></p>
+<% end %>
+
+<% if user_signed_in? %>
+  <%= form_with(model: [@photo, Comment.new]) do |form| %>
+    <%= form.text_area :body %>
+    <%= form.submit 'Comentar' %>
+  <% end %>
+<% end %>
+
+
 <div>
   <%= link_to "Edit this photo", edit_photo_path(@photo) %> |
   <%= link_to "Back to photos", photos_path %>

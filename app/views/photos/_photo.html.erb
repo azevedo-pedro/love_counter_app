@@ -9,4 +9,9 @@
     <%= photo.relationship_id %>
   </p>
 
+  <p>
+    <strong>Image:</strong>
+    <%= image_tag photo.image, class: "img-fluid" if photo.image.attached? %>
+  </p>
+
 </div>
