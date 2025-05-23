@@ -1,17 +1,16 @@
-<div id="<%= dom_id comment %>">
-  <p>
-    <strong>Body:</strong>
+<div id="<%= dom_id comment %>" class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow mb-4">
+  <p class="text-gray-800 dark:text-gray-200">
+    <strong class="text-gray-700 dark:text-gray-300">Body:</strong>
     <%= comment.body %>
   </p>
 
-  <p>
-    <strong>User:</strong>
+  <p class="text-gray-800 dark:text-gray-200">
+    <strong class="text-gray-700 dark:text-gray-300">User:</strong>
     <%= comment.user_id %>
   </p>
 
-  <p>
-    <strong>Photo:</strong>
+  <p class="text-gray-800 dark:text-gray-200">
+    <strong class="text-gray-700 dark:text-gray-300">Photo:</strong>
     <%= comment.photo_id %>
   </p>
-
 </div>

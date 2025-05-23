@@ -17,4 +17,5 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   get '/love/:id', to: 'public#show', as: :public_relationship
+  get '/theme/:theme', to: 'theme#switch', as: :switch_theme
 end

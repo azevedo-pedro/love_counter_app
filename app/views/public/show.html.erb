@@ -1,16 +1,34 @@
-<div class="text-center p-8">
-  <h1 class="text-4xl text-gothic-accent">Nosso Amor</h1>
-  <p class="mt-4 text-xl">Estamos juntos há <%= @relationship.duration_in_days %> dias</p>
+<div class="text-center p-8 bg-white dark:bg-gray-900 rounded-lg shadow-md">
+  <h1 class="text-4xl text-gothic-accent dark:text-pink-300">Nosso Amor</h1>
+  <div data-controller="timer"
+  data-timer-days-value="<%= @duration[:days] %>"
+  data-timer-hours-value="<%= @duration[:hours] %>"
+  data-timer-minutes-value="<%= @duration[:minutes] %>"
+  data-timer-seconds-value="<%= @duration[:seconds] %>">
+
+<p class="text-xl text-gray-800 dark:text-gray-200 text-center">
+ Estamos juntos há
+ <span data-timer-target="output"
+       class="font-semibold text-pink-700 dark:text-pink-300">
+   <%= @duration[:days] %> dias, <%= @duration[:hours] %> horas,
+   <%= @duration[:minutes] %> minutos e <%= @duration[:seconds] %> segundos
+ </span>
+</p>
 </div>
 
-<div id="photoCarousel" class="carousel slide mt-8" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    <% @photos.each_with_index do |photo, i| %>
-      <div class="carousel-item <%= 'active' if i == 0 %>">
-        <% if photo.image.attached? %>
-          <%= image_tag photo.image, class: "d-block mx-auto w-full md:w-2/3 rounded-xl shadow-lg" %>
-        <% end %>
-      </div>
+</p>
+
+  </div>
+
+<div class="mt-8">
+  <div class="flex space-x-4 overflow-x-auto pb-4">
+    <% @photos.each do |photo| %>
+      <% if photo.image.attached? %>
+        <div class="flex-shrink-0">
+          <%= image_tag photo.image, class: "mx-auto w-40 md:w-80 rounded-xl shadow-lg dark:shadow-gray-700 object-cover" %>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>
+
