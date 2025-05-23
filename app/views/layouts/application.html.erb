@@ -27,9 +27,14 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-gothic-background text-gothic-text font-gothic">
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
+  <body class="flex min-h-screen bg-gray-100 text-gray-800">
+  <% if user_signed_in? %>
+    <%= render 'shared/sidebar' %>
+  <% end %>
+
+  <main class="flex-1 p-6">
+    <%= yield %>
+  </main>
+  
   </body>
 </html>

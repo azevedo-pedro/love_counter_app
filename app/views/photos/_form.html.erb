@@ -21,10 +21,11 @@
     <%= form.file_field :image %>
   </div>
 
-  <div>
-    <%= form.label :relationship_id, style: "display: block" %>
-    <%= form.text_field :relationship_id %>
+  <div class="mb-4">
+    <%= form.label :relationship_id, "Relacionamento" %>
+    <%= form.collection_select :relationship_id, Relationship.all, :id, :start_date, class: "border rounded px-3 py-2" %>
   </div>
+
 
   <div>
     <%= form.submit %>

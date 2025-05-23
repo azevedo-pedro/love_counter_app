@@ -4,11 +4,13 @@
 
 <div id="photoCarousel" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
+  <% if @relationship.photos.attached? %>
     <% @relationship.photos.each_with_index do |photo, index| %>
       <div class="carousel-item <%= 'active' if index == 0 %>">
         <%= image_tag photo.image, class: "d-block w-100" if photo.image.attached? %>
       </div>
     <% end %>
+  <% end %>
   </div>
   <button class="carousel-control-prev" data-bs-target="#photoCarousel" data-bs-slide="prev">
     <span class="carousel-control-prev-icon"></span>
