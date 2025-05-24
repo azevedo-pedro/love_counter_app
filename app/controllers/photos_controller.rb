@@ -1,6 +1,19 @@
 class PhotosController < ApplicationController
+  # This line defines a Ruby class named PhotosController, which inherits from ApplicationController.
+
+  private
+    def set_photo
+      @photo = Photo.find(params[:id])
+    end
+
+    def photo_params
+      params.require(:photo).permit(:title, :relationship_id, :image)
+    end
+
+  public
+
+  before_action :authenticate_user!, except: [ :index, :show ]
   before_action :set_photo, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!, except: [:index, :show]
 
   # GET /photos or /photos.json
   def index
@@ -8,8 +21,7 @@ class PhotosController < ApplicationController
   end
 
   # GET /photos/1 or /photos/1.json
-  def show
-  end
+  def show; end
 
   # GET /photos/new
   def new
@@ -17,8 +29,7 @@ class PhotosController < ApplicationController
   end
 
   # GET /photos/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /photos or /photos.json
   def create
@@ -57,15 +68,4 @@ class PhotosController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_photo
-      @photo = Photo.find(params.expect(:id))
-    end
-
-    # Only allow a list of trusted parameters through.
-    def photo_params
-      params.expect(photo: [ :title, :relationship_id, :image ])
-    end
 end
