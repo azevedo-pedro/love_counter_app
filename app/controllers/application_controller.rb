@@ -7,5 +7,4 @@ class ApplicationController < ActionController::Base
   def set_theme
     cookies[:theme] = params[:theme] if params[:theme].present?
   end
-
 end

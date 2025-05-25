@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="<%= cookies[:theme] || 'light' %>">
+<html class="<%= cookies[:theme] || 'dark' %>">
   <head>
     <title><%= content_for(:title) || "Love Counter App" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -19,13 +19,43 @@
     <link rel="apple-touch-icon" href="/icon.png">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
 
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-white text-black dark:bg-indigo-950 dark:text-indigo-100">
+  <body class="bg-stone-200 text-black dark:bg-gothic-background dark:text-gothic-text">
+    <div class="fixed bottom-6 right-6 z-50">
+      <button
+        onclick="document.documentElement.classList.toggle('dark')"
+        class="bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-100 p-2 rounded-full shadow hover:scale-105 transition-transform"
+        id="themeToggle"
+        aria-label="Alternar tema"
+      >
+        🌞
+      </button>
+    </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggle = document.getElementById('themeToggle');
+
+    const updateIcon = () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      toggle.textContent = isDark ? '🌙' : '🌞';
+    };
+
+    toggle.addEventListener('click', () => {
+      updateIcon();
+    });
+
+    // Atualiza ícone inicial se já estiver em modo escuro
+    updateIcon();
+  });
+</script>
+
 
   <% if user_signed_in? %>
     <%= render 'shared/sidebar' %>
@@ -34,10 +64,6 @@
   <main class="flex-1 p-6">
     <%= yield %>
   </main>
-
-  <div class="flex justify-center mt-4">
-    <%= link_to('Toggle Theme', '#', class: 'p-2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-400', data: {'controller' => 'theme'}) %>
-  </div>
 
   </body>
 </html>
