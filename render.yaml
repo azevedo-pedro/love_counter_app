@@ -2,7 +2,7 @@
 services:
   - type: web
     name: love-counter-app # Nome do seu serviço web no Render
-    env: ruby # Define o ambiente como Ruby
+    runtime: ruby
     plan: free # Ou um plano pago, se necessário (ex: starter, standard)
     # Certifique-se de que seu Gemfile especifica a versão do Ruby, ou crie um arquivo .ruby-version
     # Exemplo de variável de ambiente para versão do Ruby (opcional, Render tenta detectar):
@@ -24,8 +24,8 @@ services:
 
   - type: pserv # Serviço Privado para o banco de dados
     name: love-counter-db # Nome do seu serviço de banco de dados
-    env: postgres # Ou mysql, se preferir
     plan: free # Ou um plano pago para o banco de dados (ex: starter)
-    # postgresqlVersion: "15" # Opcional: especifique a versão do PostgreSQL.
-    # Discos persistentes não são suportados no plano gratuito para bancos de dados.
-    # O Render gerencia o comando de inicialização para bancos de dados gerenciados.
+    disk:
+      name: postgres-data
+      mountPath: /var/lib/postgresql/data
+      sizeGB: 1 # Tamanho mínimo do disco para o plano free do PostgreSQL
