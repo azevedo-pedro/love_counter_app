@@ -26,8 +26,6 @@ services:
     name: love-counter-db # Nome do seu serviço de banco de dados
     env: postgres # Ou mysql, se preferir
     plan: free # Ou um plano pago para o banco de dados (ex: starter)
-    # postgresqlVersion: "15" # Opcional: especifique a versão do PostgreSQL
-    disk:
-      name: postgres-data
-      mountPath: /var/lib/postgresql/data
-      sizeGB: 1 # Tamanho mínimo do disco para o plano free do PostgreSQL
+    # postgresqlVersion: "15" # Opcional: especifique a versão do PostgreSQL.
+    # Discos persistentes não são suportados no plano gratuito para bancos de dados.
+    # O Render gerencia o comando de inicialização para bancos de dados gerenciados.
