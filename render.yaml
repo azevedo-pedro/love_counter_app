@@ -1,30 +1,24 @@
-# render.yaml
 services:
-  - type: web
-    name: love-counter-app # Nome do seu serviço web no Render
-    runtime: ruby
-    plan: free # Ou um plano pago, se necessário (ex: starter, standard)
-    # Certifique-se de que seu Gemfile especifica a versão do Ruby, ou crie um arquivo .ruby-version
-    # Exemplo de variável de ambiente para versão do Ruby (opcional, Render tenta detectar):
-    # envVars:
-    #   - key: RUBY_VERSION
-    #     value: "3.2.2" # Substitua pela versão desejada
-    buildCommand: "./bin/render-build.sh" # Script para build e migrações
-    startCommand: "bundle exec puma -C config/puma.rb" # Comando para iniciar o servidor Rails
-    healthCheckPath: /up # Rota para verificação de saúde (padrão do Rails 7+)
+  - type: web # Serviço web para a aplicação Rails
+    name: love_counter_app
+    env: ruby
+    buildCommand: "./bin/render-build.sh" # Script de build (veja abaixo)
+    startCommand: "bundle exec pumactl start -C config/puma.rb"
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: love-counter-db # Nome do serviço de banco de dados (definido abaixo)
+          name: love_counter_db # Nome do serviço de banco de dados abaixo
           property: connectionString
       - key: RAILS_MASTER_KEY
-        sync: false # IMPORTANTE: Defina esta variável no dashboard do Render, não a comite!
+        sync: false # Mantenha chaves secretas fora do render.yaml, configure via dashboard ou secrets files
+      - key: RAILS_ENV
+        value: production
       - key: RAILS_SERVE_STATIC_FILES
-        value: "true" # Necessário para o Rails servir assets em produção no Render
+        value: true # Para servir assets compilados pelo Rails
 
-  - type: pserv # Serviço Privado para o banco de dados
-    name: love-counter-db # Nome do seu serviço de banco de dados
-    plan: free # Ou um plano pago para o banco de dados (ex: starter)
-    disk:
-      name: postgres-data
-      mountPath: /var/lib/postgresql/data
+  - type: pserv # Banco de dados PostgreSQL
+    name: love_counter_db
+    ipAllowList: [] # Permite acesso de qualquer lugar (ajuste conforme necessário para segurança)
+    plan: free # Escolha o plano adequado
+    databaseName: love_counter_app_production
+    user: love_counter_app

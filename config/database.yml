@@ -82,7 +82,7 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: love-counter-db
+    database: love_counter_app_production_f2vt
     username: love_counter_app
     password: <%= ENV["LOVE_COUNTER_APP_DAPTABASE_PASSWORD"] %>
   cache:
