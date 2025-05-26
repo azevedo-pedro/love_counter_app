@@ -1,26 +1,17 @@
 #!/usr/bin/env bash
 
-# Exit on error
+# Exit immediately if a command exits with a non-zero status.
 set -o errexit
 
-# Adicione a versão do Ruby explicitamente (opcional, mas boa prática)
-# Ex: export RUBY_VERSION="3.2.2"
-# Adicione ou garanta que as variáveis de ambiente necessárias estejam presentes,
-# embora o Render já forneça muitas delas.
-
-# Instala as gems
+# Install gems
 bundle install
 
-# Precompila os assets
+# Precompile assets (if you have frontend assets)
 RAILS_ENV=production bundle exec rails assets:precompile
-RAILS_ENV=production bundle exec rails db:prepare
 
-# Executa as migrações do banco de dados
-# Isso é importante para novas implantações ou atualizações de esquema
+# **** CRITICAL: Run database migrations ****
+# This will create the 'solid_queue_jobs' table and other necessary tables.
 RAILS_ENV=production bundle exec rails db:migrate
 
-# Certifique-se de que a migração do Solid Cache seja executada
-# Se você tiver `solid_cache`, você precisará executar as migrações específicas
-# rails solid_cache:install:migrations
-# rails db:migrate
-# Certifique-se que estas migrações já estão no seu repositório local.
+# Any other post-build steps (e.g., seeding data, etc.)
+# RAILS_ENV=production bundle exec rails db:seed # Optional, if you have seed data
