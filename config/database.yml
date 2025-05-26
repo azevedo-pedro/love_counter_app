@@ -80,6 +80,7 @@ test:
 production:
   primary: &primary_production
     <<: *default
+    url: <%= ENV['DATABASE_URL'] %>
     database: love_counter_app_production
     username: love_counter_app
     password: <%= ENV["LOVE_COUNTER_APP_DAPTABASE_PASSWORD"] %>
