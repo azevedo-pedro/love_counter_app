@@ -28,4 +28,3 @@ services:
     disk:
       name: postgres-data
       mountPath: /var/lib/postgresql/data
-      sizeGB: 1 # Tamanho mínimo do disco para o plano free do PostgreSQL

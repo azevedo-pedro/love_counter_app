@@ -1,15 +1,25 @@
 #!/usr/bin/env bash
-# exit on error
+
+# Exit on error
 set -o errexit
 
-# Instala as dependências
+# Adicione a versão do Ruby explicitamente (opcional, mas boa prática)
+# Ex: export RUBY_VERSION="3.2.2"
+# Adicione ou garanta que as variáveis de ambiente necessárias estejam presentes,
+# embora o Render já forneça muitas delas.
+
+# Instala as gems
 bundle install
 
 # Precompila os assets
-bundle exec rails assets:precompile
+RAILS_ENV=production bundle exec rails assets:precompile
 
 # Executa as migrações do banco de dados
-bundle exec rails db:migrate
-# Para o primeiro deploy, ou se você preferir resetar e popular o banco,
-# você pode usar 'bundle exec rails db:prepare' no lugar de 'db:migrate'.
-# Cuidado ao usar db:prepare em produção, pois pode apagar dados.
+# Isso é importante para novas implantações ou atualizações de esquema
+RAILS_ENV=production bundle exec rails db:migrate
+
+# Certifique-se de que a migração do Solid Cache seja executada
+# Se você tiver `solid_cache`, você precisará executar as migrações específicas
+# rails solid_cache:install:migrations
+# rails db:migrate
+# Certifique-se que estas migrações já estão no seu repositório local.
