@@ -13,6 +13,7 @@ bundle install
 
 # Precompila os assets
 RAILS_ENV=production bundle exec rails assets:precompile
+RAILS_ENV=production bundle exec rails db:prepare
 
 # Executa as migrações do banco de dados
 # Isso é importante para novas implantações ou atualizações de esquema

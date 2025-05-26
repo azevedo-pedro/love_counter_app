@@ -16,6 +16,8 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV.fetch("DATABASE_HOST") { "localhost" } %>
+  port: <%= ENV.fetch("DATABASE_PORT") { 5432 } %>
   username: <%= ENV.fetch("DATABASE_USERNAME") { "postgres" } %>
   password: <%= ENV.fetch("DATABASE_PASSWORD") { "senha123" } %>
 
@@ -80,8 +82,8 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    url: <%= ENV['DATABASE_URL'] %>
     database: love_counter_app_production
+    url: <%= ENV['DATABASE_URL'] %>
     username: love_counter_app
     password: <%= ENV["LOVE_COUNTER_APP_DAPTABASE_PASSWORD"] %>
   cache:
