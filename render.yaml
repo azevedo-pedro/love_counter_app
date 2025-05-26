@@ -18,7 +18,4 @@ services:
 
   - type: pserv # Banco de dados PostgreSQL
     name: love_counter_db
-    ipAllowList: [] # Permite acesso de qualquer lugar (ajuste conforme necessário para segurança)
     plan: free # Escolha o plano adequado
-    databaseName: love_counter_app_production
-    user: love_counter_app
