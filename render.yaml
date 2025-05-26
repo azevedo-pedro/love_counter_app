@@ -1,0 +1,33 @@
+# render.yaml
+services:
+  - type: web
+    name: love-counter-app # Nome do seu serviço web no Render
+    env: ruby # Define o ambiente como Ruby
+    plan: free # Ou um plano pago, se necessário (ex: starter, standard)
+    # Certifique-se de que seu Gemfile especifica a versão do Ruby, ou crie um arquivo .ruby-version
+    # Exemplo de variável de ambiente para versão do Ruby (opcional, Render tenta detectar):
+    # envVars:
+    #   - key: RUBY_VERSION
+    #     value: "3.2.2" # Substitua pela versão desejada
+    buildCommand: "./bin/render-build.sh" # Script para build e migrações
+    startCommand: "bundle exec puma -C config/puma.rb" # Comando para iniciar o servidor Rails
+    healthCheckPath: /up # Rota para verificação de saúde (padrão do Rails 7+)
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: love-counter-db # Nome do serviço de banco de dados (definido abaixo)
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false # IMPORTANTE: Defina esta variável no dashboard do Render, não a comite!
+      - key: RAILS_SERVE_STATIC_FILES
+        value: "true" # Necessário para o Rails servir assets em produção no Render
+
+  - type: pserv # Serviço Privado para o banco de dados
+    name: love-counter-db # Nome do seu serviço de banco de dados
+    env: postgres # Ou mysql, se preferir
+    plan: free # Ou um plano pago para o banco de dados (ex: starter)
+    # postgresqlVersion: "15" # Opcional: especifique a versão do PostgreSQL
+    disk:
+      name: postgres-data
+      mountPath: /var/lib/postgresql/data
+      sizeGB: 1 # Tamanho mínimo do disco para o plano free do PostgreSQL
