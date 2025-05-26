@@ -1,21 +1,28 @@
+# This is a basic example Blueprint for a Django web service and
+# the Render Postgres database it connects to.
 services:
-  - type: web # Serviço web para a aplicação Rails
+  - type: web # A Python web service named django-app running on a free instance
+    plan: free
     name: love_counter_app
-    env: ruby
-    buildCommand: "./bin/render-build.sh" # Script de build (veja abaixo)
-    startCommand: "bundle exec pumactl start -C config/puma.rb"
+    runtime: ruby
+    repo: https://github.com/azevedo-pedro/love_counter_app.git
+    buildCommand: "./bin/render-build.sh"
+    startCommand: 'bundle exec rails server -b 0.0.0.0 -p $PORT'
     envVars:
-      - key: DATABASE_URL
+      - key: DATABASE_URL # Sets DATABASE_URL to the connection string of the django-app-db database
         fromDatabase:
-          name: love_counter_db # Nome do serviço de banco de dados abaixo
+          name: love_counter_db
           property: connectionString
       - key: RAILS_MASTER_KEY
-        sync: false # Mantenha chaves secretas fora do render.yaml, configure via dashboard ou secrets files
+        sync: false # Não sincronizar, defina manualmente no Render
+      - key: SECRET_KEY_BASE
+        generateValue: true # Render pode gerar um para você
       - key: RAILS_ENV
         value: production
-      - key: RAILS_SERVE_STATIC_FILES
-        value: true # Para servir assets compilados pelo Rails
-
-  - type: pserv # Banco de dados PostgreSQL
-    name: love_counter_db
-    plan: free # Escolha o plano adequado
+      - key: WEB_CONCURRENCY
+        value: 2 # Ajuste conforme a necessidade
+    healthCheckPath: /up
+    autoDeploy: true
+databases:
+  - name: love_counter_db # A Render Postgres database named django-app-db running on a free instance
+    plan: free
