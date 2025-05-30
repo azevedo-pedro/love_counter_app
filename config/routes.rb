@@ -13,6 +13,6 @@ Rails.application.routes.draw do
   get "/service-worker.js" => "rails/pwa#service_worker"
 
   # Defines the root path route ("/")
-  root "public#show"
-  get "/love/:id", to: "public#show", as: :public_relationship
+  root "public#index"
+  get "/love/:id", to: "public#index", as: :public_relationship
 end

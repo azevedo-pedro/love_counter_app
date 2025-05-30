@@ -4,7 +4,6 @@ class RelationshipsController < ApplicationController
   # GET /relationships or /relationships.json
   def index
     @relationships = Relationship.all
-    
   end
 
   # GET /relationships/1 or /relationships/1.json

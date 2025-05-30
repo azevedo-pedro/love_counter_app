@@ -53,6 +53,9 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+    # For static type checking
+    gem "sorbet", group: :development, require: false
+    gem "sorbet-runtime", require: false
 end
 
 group :development do
@@ -66,5 +69,13 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "tailwindcss-rails", "~> 3.3.1"
-gem "tailwindcss-ruby", "~> 3.4.17"
+
+gem "ruby_ui", "~> 1.0", group: :development, require: false
+
+gem "tailwindcss-ruby", "~> 4.1"
+
+gem "tailwindcss-rails", "~> 4.2"
+
+gem "phlex-rails", "~> 2.3"
+
+gem "tailwind_merge", "~> 1.2"

@@ -5,9 +5,12 @@
   data-timer-hours-value="<%= @duration[:hours] %>"
   data-timer-minutes-value="<%= @duration[:minutes] %>"
   data-timer-seconds-value="<%= @duration[:seconds] %>">
+  <p class="text-xl text-gray-800 dark:text-gray-200 text-center pt-4">
+    Tudo começou no dia <%= @relationship.start_date.strftime("%d/%m/%Y") %> desde então nós estamos juntos há
+  </p>
+
 
   <p class="text-xl text-gray-800 dark:text-gray-200 text-center">
-  Estamos juntos há
     <span data-timer-target="output"
           class="font-semibold text-pink-700 dark:text-pink-300">
       <%= @duration[:days] %> dias, <%= @duration[:hours] %> horas,

@@ -2,27 +2,6 @@
 
 <%= render @relationship %>
 
-<div id="photoCarousel" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-  <% @relationship.photos.each do |photo| %>
-    <div class="mb-6">
-      <% if photo.image.attached? %>
-        <%= image_tag photo.image, class: "rounded-xl shadow-md w-full max-w-md mx-auto mb-2" %>
-      <% end %>
-      <p class="text-center text-lg font-semibold mt-2"><%= photo.title %></p>
-    </div>
-  <% end %>
-  </div>
-  <button class="carousel-control-prev" data-bs-target="#photoCarousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon"></span>
-  </button>
-  <button class="carousel-control-next" data-bs-target="#photoCarousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon"></span>
-  </button>
-</div>
-
-
-
 <div>
   <%= link_to "Edit this relationship", edit_relationship_path(@relationship) %> |
   <%= link_to "Back to relationships", relationships_path %>
