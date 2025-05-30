@@ -7,3 +7,12 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+User.find_or_create_by!(email: 'azevedodev@outlook.com') do |user|
+  user.password = '123456'
+  user.name = 'Azevedo'
+  user.password_confirmation = '123456'
+end
+
+Relationship.find_or_create_by!(start_date: '2025-05-16') do |relationship|
+  relationship.user_id = 1
+end
